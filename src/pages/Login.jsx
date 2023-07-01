@@ -1,10 +1,11 @@
+import { Container } from '@mui/material';
 import LoginForm from 'components/LoginForm/LoginForm';
 
 const Login = () => {
   return (
-    <div>
+    <Container>
       <LoginForm />
-    </div>
+    </Container>
   );
 };
 export default Login;
