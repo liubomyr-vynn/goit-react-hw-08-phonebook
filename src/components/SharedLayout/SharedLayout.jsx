@@ -8,14 +8,26 @@ export const SharedLayout = () => {
         <Container maxWidth="xl">
           <Toolbar>
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              Phonebook
-            </Typography>
-            <Typography>
               <Link to="/">Home</Link>
             </Typography>
-            <Link to="/phonebook">Phonebook</Link>
-            <Link to="/register">Register</Link>
-            <Link to="/login">Login</Link>
+
+            <Link to="/phonebook">
+              <Typography variant="h6" component="div">
+                Phonebook
+              </Typography>
+            </Link>
+
+            <Link to="/register">
+              <Typography variant="h6" component="div">
+                Register
+              </Typography>
+            </Link>
+
+            <Link to="/login">
+              <Typography variant="h6" component="div">
+                Login
+              </Typography>
+            </Link>
           </Toolbar>
         </Container>
       </AppBar>
