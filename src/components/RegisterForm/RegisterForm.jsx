@@ -1,23 +1,16 @@
+import { useState } from 'react';
 import { Box, Button, TextField } from '@mui/material';
 import { useDispatch } from 'react-redux';
 import { register } from '../../redux/auth/operations';
 
 export const RegisterForm = () => {
   const dispatch = useDispatch();
+  const [passwordError, setPasswordError] = useState('');
 
   const handleSubmit = e => {
     e.preventDefault();
     const form = e.currentTarget;
 
-    // const name = form.elements.name.value;
-    // const email = form.elements.email.value;
-    // const password = form.elements.password.value;
-
-    // console.log('Name:', name);
-    // console.log('Email:', email);
-    // console.log('Password:', password);
-
-    // dispatch(register({ name, email, password }));
     const data = new FormData(e.currentTarget);
 
     const user = {
@@ -25,8 +18,26 @@ export const RegisterForm = () => {
       email: data.get('email'),
       password: data.get('password'),
     };
+
+    if (passwordError) {
+      return;
+    }
+
     dispatch(register(user));
     form.reset();
+  };
+
+  const handlePasswordChange = event => {
+    const { value } = event.target;
+    const pattern =
+      /(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{9,}/;
+    if (!pattern.test(value)) {
+      setPasswordError(
+        'Password must contain at least 9 characters, including uppercase letters, lowercase letters, numbers, and special characters.'
+      );
+    } else {
+      setPasswordError('');
+    }
   };
 
   return (
@@ -58,6 +69,9 @@ export const RegisterForm = () => {
         variant="outlined"
         type="password"
         name="password"
+        onChange={handlePasswordChange}
+        error={!!passwordError}
+        helperText={passwordError}
       />
 
       <Button variant="contained" type="submit">
@@ -66,4 +80,5 @@ export const RegisterForm = () => {
     </Box>
   );
 };
+
 export default RegisterForm;
