@@ -1,6 +1,8 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { deleteContact } from '../../redux/contacts/operations';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { List, ListItem, ListItemText, IconButton } from '@mui/material';
 
 const ContactList = () => {
   const contacts = useSelector(state => {
@@ -22,24 +24,32 @@ const ContactList = () => {
   };
 
   return (
-    <div className="section__list">
-      <ul className="contact__list">
+    <>
+      <List
+        component="ul"
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+        }}
+      >
         {contacts.map(contact => (
-          <li className="contact__item" key={contact.id}>
-            <p className="contact__text">
-              {contact.name}: {contact.number}
-            </p>
-            <button
-              type="button"
-              className="contact__button"
+          <ListItem key={contact.id}>
+            <ListItemText
+              size="small"
+              primary={`${contact.name}: ${contact.number}`}
+            />
+            <IconButton
+              aria-label="delete"
+              size="large"
               onClick={() => handleDelete(contact.id)}
             >
-              Delete
-            </button>
-          </li>
+              <DeleteIcon />
+            </IconButton>
+          </ListItem>
         ))}
-      </ul>
-    </div>
+      </List>
+    </>
   );
 };
 
