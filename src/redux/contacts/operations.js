@@ -3,11 +3,10 @@ import { Report } from 'notiflix/build/notiflix-report-aio';
 import axios from 'axios';
 
 axios.defaults.baseURL = 'https://connections-api.herokuapp.com';
-// axios.defaults.baseURL = 'https://648cbfdc8620b8bae7ed56b5.mockapi.io/';
 
 export const fetchContacts = createAsyncThunk('contacts/fetchAll', async () => {
   const response = await axios.get('/contacts');
-  console.log(response);
+
   return response.data;
 });
 
@@ -33,9 +32,13 @@ export const addContact = createAsyncThunk(
 
 export const deleteContact = createAsyncThunk(
   'contacts/deleteContact',
-  async contactId => {
-    await axios.delete(`/contacts/${contactId}`);
-    return contactId;
+  async (contactId, { rejectWithValue }) => {
+    try {
+      await axios.delete(`/contacts/${contactId}`);
+      return contactId;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
   }
 );
 
