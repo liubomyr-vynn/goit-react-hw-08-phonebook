@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { addContact } from '../../redux/contacts/operations';
-import { Container } from '@mui/material';
+import { Container, Typography, TextField, Button, Box } from '@mui/material';
 
 const ContactForm = () => {
   const dispatch = useDispatch();
@@ -17,45 +17,46 @@ const ContactForm = () => {
   };
 
   return (
-    <Container>
-      <div className="section">
-        <h1 className="section__title">Phonebook</h1>
-        <form className="form" onSubmit={handleSubmit}>
-          <div className="form__container">
-            <label className="form__label" htmlFor="name">
-              Name
-            </label>
-            <input
-              className="form__input"
+    <Container maxWidth="sm">
+      <Box
+        sx={{
+          marginTop: 4,
+          '& .MuiTextField-root': { m: 1, width: '25ch' },
+        }}
+      >
+        <Typography variant="h4" component="h1" align="center" gutterBottom>
+          Phonebook
+        </Typography>
+        <form onSubmit={handleSubmit}>
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+            }}
+          >
+            <TextField
+              label="Name"
               type="text"
               name="name"
               pattern="^[a-zA-Z\u0400-\u04FF]+([\-'\s][a-zA-Z\u0400-\u04FF]+)*$"
               title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
               required
-              id="name"
             />
-          </div>
-
-          <div className="form__container">
-            <label className="form__label" htmlFor="number">
-              Number
-            </label>
-            <input
-              className="form__input"
+            <TextField
+              label="Number"
               type="tel"
               name="number"
               pattern="^(\+?[0-9.\(\)\-\s]*)$"
               title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
               required
-              id="number"
             />
-          </div>
-
-          <button className="form__button" type="submit">
-            Add contact
-          </button>
+            <Button variant="contained" type="submit">
+              Add contact
+            </Button>
+          </Box>
         </form>
-      </div>
+      </Box>
     </Container>
   );
 };
